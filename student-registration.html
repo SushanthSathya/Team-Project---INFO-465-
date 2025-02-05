@@ -1,0 +1,180 @@
+<!-- 
+ Hasan Yunus
+STUDENT ID: 123
+PASSWORD: password   
+     -->
+     <!DOCTYPE html>
+     <html lang="en">
+     <head>
+         <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <title>Student Registration Screen</title>
+         <style>
+             body {
+                 font-family: Arial, sans-serif;
+                 text-align: center;
+                 background-color: #5e5e50;
+                 margin: 0;
+                 padding: 0;
+             }
+             .container {
+                 max-width: 600px;
+                 margin: 100px auto;
+                 background: rgb(0, 0, 0);
+                 padding: 20px;
+                 border-radius: 10px;
+                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+             }
+             h1, h2, h3, h4 {
+                 color: #ffffff;
+             }
+             .nav {
+                 display: flex;
+                 flex-direction: column;
+                 gap: 15px;
+                 margin-top: 20px;
+             }
+             .nav a {
+                 text-decoration: none;
+                 background: #9c9e14;
+                 color: rgb(255, 255, 255);
+                 padding: 10px 20px;
+                 border-radius: 5px;
+                 transition: 0.3s;
+             }
+             .nav a:hover {
+                 background: #7a7c10;
+             }
+             input[type="text"], input[type="password"] {
+                 width: 100%;
+                 padding: 10px;
+                 margin: 10px 0;
+                 border: 1px solid #ccc;
+                 border-radius: 5px;
+             }
+             button {
+                 width: 100%;
+                 padding: 10px;
+                 background-color: #28a745;
+                 color: white;
+                 border: none;
+                 border-radius: 5px;
+                 cursor: pointer;
+             }
+             button:hover {
+                 background-color: #218838;
+             }
+             .session-list, .enrolled-sessions {
+                 margin-top: 20px;
+             }
+             .session-item {
+                 padding: 10px;
+                 border-bottom: 1px solid #ccc;
+                 color: #ffffff;
+             }
+             .error {
+                 color: red;
+             }
+             .success {
+                 color: green;
+             }
+         </style>
+     </head>
+     <body>
+         <div class="container">
+             <h1>Student Registration</h1>
+     
+             <div id="login-section">
+                 <input type="text" id="student-id" placeholder="Enter Student ID">
+                 <input type="password" id="password" placeholder="Enter Password">
+                 <button onclick="login()">Login</button>
+                 <p id="login-error" class="error"></p>
+             </div>
+     
+             <div id="dashboard" style="display:none;">
+                 <h3>Welcome, <span id="student-name"></span></h3>
+                 <h4>Enrolled Sessions</h4>
+                 <div class="enrolled-sessions" id="enrolled-sessions"></div>
+     
+                 <h4>Available Sessions</h4>
+                 <div class="session-list" id="session-list"></div>
+                 <p id="registration-message"></p>
+                 <div class="nav">
+                     <a href="#" onclick="goHome()">Go to Home Page</a>
+                 </div>
+             </div>
+         </div>
+     
+         <script>
+             const students = {
+                 '123': { name: 'John Doe', password: 'password', enrolled: ['Math 101'] },
+                 '456': { name: 'Jane Smith', password: 'password123', enrolled: [] }
+             };
+     
+             const sessions = ['Math 101', 'History 201', 'Science 301', 'Art 401'];
+             const sessionLimits = { 'Math 101': 2, 'History 201': 2, 'Science 301': 2, 'Art 401': 2 };
+             const sessionEnrollments = { 'Math 101': 1, 'History 201': 0, 'Science 301': 0, 'Art 401': 0 };
+     
+             let currentStudent = null;
+     
+             function login() {
+                 const studentId = document.getElementById('student-id').value;
+                 const password = document.getElementById('password').value;
+     
+                 if (students[studentId] && students[studentId].password === password) {
+                     currentStudent = studentId;
+                     document.getElementById('student-name').textContent = students[studentId].name;
+                     document.getElementById('login-section').style.display = 'none';
+                     document.getElementById('dashboard').style.display = 'block';
+                     loadSessions();
+                 } else {
+                     document.getElementById('login-error').textContent = 'Invalid Student ID or Password';
+                 }
+             }
+     
+             function loadSessions() {
+                 const enrolledSessionsDiv = document.getElementById('enrolled-sessions');
+                 const sessionListDiv = document.getElementById('session-list');
+                 enrolledSessionsDiv.innerHTML = '';
+                 sessionListDiv.innerHTML = '';
+     
+                 students[currentStudent].enrolled.forEach(session => {
+                     enrolledSessionsDiv.innerHTML += `<div class="session-item">${session}</div>`;
+                 });
+     
+                 sessions.forEach(session => {
+                     if (!students[currentStudent].enrolled.includes(session)) {
+                         sessionListDiv.innerHTML += `<div class="session-item">${session} <button onclick="registerSession('${session}')">Register</button></div>`;
+                     }
+                 });
+             }
+     
+             function registerSession(session) {
+                 const messageDiv = document.getElementById('registration-message');
+     
+                 if (sessionEnrollments[session] >= sessionLimits[session]) {
+                     messageDiv.textContent = 'Enrollment limit reached for ' + session;
+                     messageDiv.className = 'error';
+                     return;
+                 }
+     
+                 if (students[currentStudent].enrolled.includes(session)) {
+                     messageDiv.textContent = 'You are already enrolled in ' + session;
+                     messageDiv.className = 'error';
+                     return;
+                 }
+     
+                 students[currentStudent].enrolled.push(session);
+                 sessionEnrollments[session]++;
+                 messageDiv.textContent = 'Successfully registered for ' + session;
+                 messageDiv.className = 'success';
+                 loadSessions();
+             }
+     
+             function goHome() {
+                 window.location.href = 'home.html';
+             }
+         </script>
+     </body>
+     </html>
+     
