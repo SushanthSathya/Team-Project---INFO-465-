@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: rgb(94, 88, 48);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 100px auto;
+            background: rgba(0, 0, 0, 0.892);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, label, h3, th, td {
+            color: rgba(255, 255, 255, 0.922);
+        }
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .nav a {
+            text-decoration: none;
+            background: #9c9e14;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        button {
+            background: yellow;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: gold;
+        }
+        input[type="text"] {
+            background: white;
+            border: none;
+            padding: 5px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: block;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Course Search</h1>
+        
+        <form>
+            <label for="department">Department:</label>
+            <input type="text" id="department" name="department">
+            
+            <label for="instructor">Instructor:</label>
+            <input type="text" id="instructor" name="instructor">
+            
+            <label for="course_number">Course Number:</label>
+            <input type="text" id="course_number" name="course_number">
+            
+            <button type="submit">Search</button>
+        </form>
+        
+        <h3>Search Results</h3>
+        <table border="1" style="width: 100%; margin-top: 20px; background: black;">
+            <tr>
+                <th>Course Number</th>
+                <th>Title</th>
+                <th>Instructor</th>
+                <th>Credit Hours</th>
+                <th>Prerequisites</th>
+                <th>Modality</th>
+                <th>Max Enrollment</th>
+            </tr>
+            <tr>
+                <td>INFO 465</td>
+                <td>Projects in Information Systems</td>
+                <td>Dr. McGarry</td>
+                <td>3</td>
+                <td>None</td>
+                <td>Online</td>
+                <td>30</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
